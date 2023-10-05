@@ -19,11 +19,12 @@ data["TotalCharges"] = data["TotalCharges"].astype("float64")
 data.drop("customerID", axis="columns", inplace=True)
 
 """
-Dealing with unbalance in target variable.
+Dealing with imbalance in the target variable.
 Each observation in class one is selected twice.
-The observations from class zero were selected randomly
-so that their number was the same as the number of observations in class one.
+The observations in class zero were selected randomly
+so that their number is the same as the number of observations in class one.
 """
+
 zero_class = data[data["Churn"] == "No"].reset_index()
 one_class = data[data["Churn"] == "Yes"]
 
