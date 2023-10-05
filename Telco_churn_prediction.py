@@ -81,7 +81,7 @@ selected_vars = data.columns[[x != 0 for x in regression_coefficients[0]]]
 regression_features = pd.DataFrame(selected_vars)
 regression_features.to_csv("logistic_regression_features.csv")
 
-# Decision tree.
+# Decision tree
 decision_tree = tree.DecisionTreeClassifier(max_depth=5, min_samples_split=30, random_state=123)
 ada_boost_tree = AdaBoostClassifier(n_estimators=30, estimator=decision_tree, learning_rate=1)
 ada_boost_tree.fit(data_train, answers_train)
@@ -91,10 +91,12 @@ test_prob_tree = ada_boost_tree.predict_proba(data_test)[:, 1]
 metrics_train_tree = pd.DataFrame(calculate_metrics(answers_train, train_prob_tree, "tree_train"))
 metrics_test_tree = pd.DataFrame(calculate_metrics(answers_test, test_prob_tree, "tree_test"))
 
+# Decision tree feature importance
 tree_feature_importance = data.columns[[i != 0 for i in ada_boost_tree.feature_importances_]]
 tree_feature = pd.DataFrame(tree_feature_importance)
 tree_feature.to_csv("tree_features.csv")
 
+# Saving metrics
 metrics_data = pd.concat([metrics_train_lr, metrics_test_lr, metrics_train_tree, metrics_test_tree])
 metrics_data.to_csv("models_metrics.csv", sep=";", decimal=",")
 
