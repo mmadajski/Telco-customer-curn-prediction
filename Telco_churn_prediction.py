@@ -96,7 +96,7 @@ tree_feature = pd.DataFrame(tree_feature_importance)
 tree_feature.to_csv("tree_features.csv")
 
 metrics_data = pd.concat([metrics_train_lr, metrics_test_lr, metrics_train_tree, metrics_test_tree])
-metrics_data.to_csv("models_metrics.csv")
+metrics_data.to_csv("models_metrics.csv", sep=";", decimal=",")
 
 fpr, tpr, _ = roc_curve(answers_test, test_prob_tree)
 roc_tree = pd.DataFrame({"fpr": fpr, "tpr": tpr})
