@@ -6,6 +6,8 @@ using their services. Therefore, identifying customers who will leave is essenti
 because it may allow a company to take measures to retain them. In this project,
 I created models that are able to both classify customers who leave and select the most important variables in the dataset. 
 
+Technologies used: Python, Sklearn, Pandas
+
 Project based on Telco Customer Churn data: https://www.kaggle.com/datasets/blastchar/telco-customer-churn
 
 ## Data preparation 
