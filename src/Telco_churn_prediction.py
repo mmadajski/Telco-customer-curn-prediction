@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from random import sample, seed
@@ -5,9 +6,8 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn import tree
-from sklearn.metrics import roc_curve
 from sklearn.linear_model import LogisticRegression
-from Utils import calculate_metrics
+from Utils import get_model_metrics, save_roc_curve_data
 
 
 # Reading data and dropping rows with missing values
@@ -67,40 +67,33 @@ X_test[["tenure", "MonthlyCharges", "TotalCharges"]] = scaler.transform(X_test[[
 logistic_regression = LogisticRegression(penalty="elasticnet", C=0.01, l1_ratio=0.8, solver="saga")
 logistic_regression.fit(X_train, Y_train)
 
-train_prob_lr = logistic_regression.predict_proba(X_train)[:, 1]
-test_prob_lr = logistic_regression.predict_proba(X_test)[:, 1]
-metrics_train_lr = pd.DataFrame(calculate_metrics(Y_train, train_prob_lr, "lr_train"))
-metrics_test_lr = pd.DataFrame(calculate_metrics(Y_test, test_prob_lr, "lr_test"))
-
-fpr, tpr, _ = roc_curve(Y_test, test_prob_lr)
-roc_lr = pd.DataFrame({"fpr": fpr, "tpr": tpr})
-roc_lr.to_csv("lr_roc_data.csv", sep=";", decimal=",")
+logistic_regression_metrics = get_model_metrics(logistic_regression, "logistic_regression", X_train, Y_train, X_test, Y_test)
 
 # Variables used in the logistic regression model
 regression_coefficients = logistic_regression.coef_
 selected_vars = data.columns[[x != 0 for x in regression_coefficients[0]]]
 regression_features = pd.DataFrame(selected_vars)
-regression_features.to_csv("logistic_regression_features.csv")
 
 # Decision tree
 decision_tree = tree.DecisionTreeClassifier(max_depth=5, min_samples_split=30, random_state=123)
 ada_boost_tree = AdaBoostClassifier(n_estimators=30, estimator=decision_tree, learning_rate=1)
 ada_boost_tree.fit(X_train, Y_train)
 
-train_prob_tree = ada_boost_tree.predict_proba(X_train)[:, 1]
-test_prob_tree = ada_boost_tree.predict_proba(X_test)[:, 1]
-metrics_train_tree = pd.DataFrame(calculate_metrics(Y_train, train_prob_tree, "tree_train"))
-metrics_test_tree = pd.DataFrame(calculate_metrics(Y_test, test_prob_tree, "tree_test"))
+tree_metrics = get_model_metrics(ada_boost_tree, "ada_boost_tree", X_train, Y_train, X_test, Y_test)
 
 # Decision tree feature importance
 tree_feature_importance = data.columns[[i != 0 for i in ada_boost_tree.feature_importances_]]
 tree_feature = pd.DataFrame(tree_feature_importance)
-tree_feature.to_csv("tree_features.csv")
 
-# Saving metrics
-metrics_data = pd.concat([metrics_train_lr, metrics_test_lr, metrics_train_tree, metrics_test_tree])
-metrics_data.to_csv("models_metrics.csv", sep=";", decimal=",")
+# Saving metrics and used features
+if not os.path.exists("..\\metrics"):
+    os.makedirs("..\\metrics")
 
-fpr, tpr, _ = roc_curve(Y_test, test_prob_tree)
-roc_tree = pd.DataFrame({"fpr": fpr, "tpr": tpr})
-roc_tree.to_csv("tree_roc_data.csv", sep=";", decimal=",")
+metrics_data = pd.concat([tree_metrics, logistic_regression_metrics])
+metrics_data.to_csv("..\\metrics\\models_metrics.csv", sep=";", decimal=",")
+
+save_roc_curve_data(logistic_regression, "logistic_regression_roc_data", X_test, Y_test)
+save_roc_curve_data(ada_boost_tree, "ada_boost_tree_roc_data", X_test, Y_test)
+
+tree_feature.to_csv("..\\metrics\\tree_features.csv")
+regression_features.to_csv("..\\metrics\\logistic_regression_features.csv")
