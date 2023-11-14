@@ -6,9 +6,22 @@ using their services. Therefore, identifying customers who will leave is essenti
 because it may allow a company to take measures to retain them. In this project,
 I created models that are able to both classify customers who leave and select the most important variables in the dataset. 
 
-Technologies used: Python, Sklearn, Pandas
+Technologies used: Python, Sklearn, Pandas, PowerBI
 
-Project based on Telco Customer Churn data: https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+Project based on Telco Customer Churn data: [telco-customer-churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
+
+---
+
+## EDA
+
+Before creating the models, I sought to better understand the data and gain insight into customer decisions.
+I have put the most interesting of the extracted information on a dashboard created using PowerBI.
+
+![](https://github.com/mmadajski/Telco-customer-curn-prediction/blob/main/Dashboards/Telco_Churn_analysis.png)
+
+
+
+---
 
 ## Data preparation 
 
@@ -20,6 +33,7 @@ The target variable named "Churn" is a binary variable describing whether a cust
 The categorical variables were recoded to binary using one-hot encoding. Then data was split into train and test datasets,
 and standardized.
 
+---
 
 ## Models 
 
@@ -27,14 +41,20 @@ Due to high number of variables (41 variables after one-hot encoding) it was imp
 
 Therefor two model were selected: penalized logistic regression and decision tree.
 
+---
+
 ### Penalized Logistic Regression
 
 The logistic regression model was fitted using a elastic network, a C-parameter of 0.01 (the C-parameter is the inverse of the regularization strength) and a l1 ratio of 0.8 (the l1 ration is the mixing parameter of the elastic network).
+
+---
 
 ### Decision Tree
 
 The decision tree was fitted using gini impurity, a maximum depth of 5 and a minimum number of observations in a leaf of 30. 
 In addition, to improve tree performance, the AdaBoost algorithm with 30 estimators and a learning rate of 1 was used. 
+
+---
 
 # Performance comparison 
 
@@ -48,6 +68,7 @@ In addition, to improve tree performance, the AdaBoost algorithm with 30 estimat
 |Specificity| 0,73 |0,87
 |AUC| 0,84 |0,97
 
+---
 
 #### Test data
 |   | Logistic Regression | Decision Tree |
@@ -60,6 +81,7 @@ In addition, to improve tree performance, the AdaBoost algorithm with 30 estimat
 |AUC| 0,84 |0,85
 
 The decision tree used 32 variables in the prediction, while the logistic regression model used only 10.
+---
 
 ## Conclusion 
 
