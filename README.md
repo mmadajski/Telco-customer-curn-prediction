@@ -1,5 +1,5 @@
 # Telco customer churn prediction
-
+## Introduction
 Acquiring customers is a difficult and expensive task,
 which is why companies don't want their customers to leave after they start
 using their services. Therefore, identifying customers who will leave is essential,
@@ -11,7 +11,16 @@ Technologies used: Python, Sklearn, Pandas, PowerBI
 Project based on Telco Customer Churn data: [telco-customer-churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 
 ---
-
+## Table of Contents
+- [Introduction](#introduction)
+- [Getting familiar with the data](#getting-familiar-with-the-data)
+- [Data preparation ](#data-preparation )
+- [Models](#models)
+- [Penalized Logistic Regression](#penalized-logistic-regression)
+- [Decision Tree](#decision-tree)
+- [Performance comparison](#Performance-comparison)
+- [Conclusion](#Conclusion)
+  
 ## Getting familiar with the data
 
 Before creating the models, I sought to better understand the data and gain insight into customer decisions.
