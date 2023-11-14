@@ -18,8 +18,8 @@ Project based on Telco Customer Churn data: [telco-customer-churn](https://www.k
 - [Models](#models)
 - [Penalized Logistic Regression](#penalized-logistic-regression)
 - [Decision Tree](#decision-tree)
-- [Performance comparison](#Performance-comparison)
-- [Conclusion](#Conclusion)
+- [Performance comparison](#performance-comparison)
+- [Conclusion](#conclusion)
   
 ## Getting familiar with the data
 
@@ -91,11 +91,30 @@ In addition, to improve tree performance, the AdaBoost algorithm with 30 estimat
 |AUC| 0,84 |0,85
 
 The decision tree used 32 variables in the prediction, while the logistic regression model used only 10.
+
 ---
 
 ## Conclusion 
 
 Even though metrics such as accuracy and recall are slightly higher for the decision tree, logistic regression is a better model because it was able to make predictions using only 10 variables compared to the 32 variables used by the decision tree. In addition the decision tree is severly overfitted.
+
+---
+
+## Instalation
+To install and run the project, follow these simple steps:
+
+1. Clone the repository:
+```bash
+git clone https://github.com/mmadajski/Telco-customer-curn-prediction
+```
+2. Install the required dependencies. If you're using pip:
+```bash
+pip install -r requirements.txt
+```
+3. Download the data from Kaggle platform: [kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
+4. Unzip data inside the `src` directory
+5. Run the `Telco_churn_prediction.py` script
+6. Have fun 😄
 
 
 
