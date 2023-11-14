@@ -12,7 +12,7 @@ Project based on Telco Customer Churn data: [telco-customer-churn](https://www.k
 
 ---
 
-## EDA
+## Getting familiar with the data
 
 Before creating the models, I sought to better understand the data and gain insight into customer decisions.
 I have put the most interesting of the extracted information on a dashboard created using PowerBI.
@@ -21,7 +21,6 @@ I have put the most interesting of the extracted information on a dashboard crea
 
 On the dashboard above we can see that customers using fiber optics or pay with electronic check have much higher chance of leaving the company. 
 This may be due to the poor quality of services served. We should also encourage customers to sign contracts other than monthly, because a very high percentage of those who sign such a contract leave. 
-
 
 ---
 
